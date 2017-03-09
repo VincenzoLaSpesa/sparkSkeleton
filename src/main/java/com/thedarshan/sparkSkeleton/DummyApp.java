@@ -6,20 +6,17 @@
 package com.thedarshan.sparkSkeleton;
 
 import com.google.gson.Gson;
-import static j2html.TagCreator.body;
-import static j2html.TagCreator.h1;
-import static j2html.TagCreator.p;
-import static j2html.TagCreator.strong;
+import freemarker.template.Configuration;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
-import java.util.AbstractList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import spark.ModelAndView;
 import spark.Spark;
-import spark.template.handlebars.HandlebarsTemplateEngine;
+import spark.template.freemarker.FreeMarkerEngine;
 
 /**
  *
@@ -29,10 +26,13 @@ public class DummyApp extends AbstractSparkApplication {
 
     List<Map<String, Double>> dataset;
     String templateDir;
+    Configuration conf;
+    FreeMarkerEngine templateEngine;
     
-    public DummyApp(String mountPoint, String dataDir) {
+    public DummyApp(String mountPoint, String dataDir)  {
         super(mountPoint, dataDir);
         templateDir=FileSystems.getDefault().getPath(dataDir, "templates").toString();
+        conf= new Configuration();
     }
 
     @Override
@@ -43,12 +43,16 @@ public class DummyApp extends AbstractSparkApplication {
         System.out.println("Template directory is " + this.templateDir);
 
         dataset=loadData();
+        conf.setDirectoryForTemplateLoading(new File(templateDir));
+        templateEngine= new FreeMarkerEngine(conf);
 
         Spark.get(mountPoint + "/hello", (req, res) -> hello());
         Map map = new HashMap();
         map.put("title", "Iris Dataset");
         map.put("dataset", dataset);        
-        Spark.get(mountPoint +"/iris", (req, res) -> new ModelAndView(map, "iris.html"), new HandlebarsTemplateEngine(this.templateDir));        
+        Spark.get(mountPoint +"/iris", (req, res) -> new ModelAndView(map, "iris.ftl"), templateEngine);        
+        
+        
     }
 
     @Override
@@ -57,17 +61,12 @@ public class DummyApp extends AbstractSparkApplication {
     }
 
     /**
-     * A sample method that uses j2html to build simple html from code without
-     * external template
+     * A sample method that builds simple html from code without external template
      *
      * @return an html
      */
     private String hello() {
-        return body().with(
-                h1("Hello there!"),
-                p("This is a sample application, its name is "),
-                strong().with(p(this.getClass().getName()))
-        ).render();
+        return String.format("<html><body><h1>Hello there!</h1><p>This is a sample application, its name is <strong>%s</strong></p></body></html>",this.getClass().getName());
     }
     
    

@@ -9,7 +9,7 @@
 	<link rel="icon" type="image/png" sizes="96x96" href="/static/favicon-96x96.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">	
 	
-    <title>{{title}}</title>
+    <title>${title}</title>
 
     <meta name="description" content="Main template page, based on Bootstrap">
     <meta name="author" content="Vincenzo La Spesa https://github.com/VincenzoLaSpesa">
@@ -20,7 +20,7 @@
 
   </head>
   <body>
-	{{> templateInterno }}
+	<#include "./iris_nested.ftl">
   <hr>
   </body>
 </html>
