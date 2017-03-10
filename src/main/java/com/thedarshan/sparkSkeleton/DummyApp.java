@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.thedarshan.sparkSkeleton;
 
+import com.thedarshan.sparkSkeleton.dbms.DatabaseInterface;
 import com.google.gson.Gson;
 import freemarker.template.Configuration;
 import java.io.File;
@@ -51,7 +47,7 @@ public class DummyApp extends AbstractSparkApplication {
         map.put("title", "Iris Dataset");
         map.put("dataset", dataset);        
         Spark.get(mountPoint +"/iris", (req, res) -> new ModelAndView(map, "iris.ftl"), templateEngine);        
-        
+        DatabaseInterface dbi= new DatabaseInterface();
         
     }
 

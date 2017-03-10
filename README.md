@@ -1,5 +1,8 @@
 # sparkSkeleton
-A minimal Spark web application. I use it as a base template for small projects.
+This project aims to be a minimal application server to host some of my test application on a raspberry pi.
+So it's an application server with skeleton dependencies.
+
+Using jetty and spark it's possible to build a complete web application with a footprint of 3.5MB only.
 
 **It's still WIP**
 
@@ -7,6 +10,6 @@ As soon as I finish this application should show how to:
 
 -	Setup a spark application with routes
 -	Obtain data from a custom folder
--	Obtain data from a SQLITE database
+-	Obtain data from an embedded Derby database with a minimal ORM (OrmLite)
 -	Generate static html output
 -	Generate html output based on a template
