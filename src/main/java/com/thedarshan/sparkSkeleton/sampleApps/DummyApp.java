@@ -1,7 +1,9 @@
-package com.thedarshan.sparkSkeleton;
+package com.thedarshan.sparkSkeleton.sampleApps;
 
 import com.thedarshan.sparkSkeleton.dbms.DatabaseInterface;
 import com.google.gson.Gson;
+import com.thedarshan.sparkSkeleton.AbstractSparkApplication;
+import com.thedarshan.sparkSkeleton.Helper;
 import freemarker.template.Configuration;
 import java.io.File;
 import java.io.IOException;
@@ -46,13 +48,11 @@ public class DummyApp extends AbstractSparkApplication {
         Map map = new HashMap();
         map.put("title", "Iris Dataset");
         map.put("dataset", dataset);        
-        Spark.get(mountPoint +"/iris", (req, res) -> new ModelAndView(map, "iris.ftl"), templateEngine);        
-        DatabaseInterface dbi= new DatabaseInterface();
-        
+        Spark.get(mountPoint +"/iris", (req, res) -> new ModelAndView(map, "iris.ftl"), templateEngine);               
     }
 
     @Override
-    void shutdown() {
+    public void shutdown() {
         System.out.println(String.format("Unmounting %s from %s", this.getClass().getName(), mountPoint));
     }
 

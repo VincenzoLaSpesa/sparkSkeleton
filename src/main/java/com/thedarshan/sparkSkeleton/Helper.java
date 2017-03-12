@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.Connection;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -17,7 +18,7 @@ import spark.Spark;
  * @author Darshan
  */
 public abstract class Helper {
-
+  
     public static String readFile(String pathname) throws IOException {
 
         File file = new File(pathname);

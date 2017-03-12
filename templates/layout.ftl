@@ -1,3 +1,8 @@
+<#macro page_body>  
+  <p>This is a placeholder</p>
+</#macro>
+
+<#macro display_page>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -20,7 +25,9 @@
 
   </head>
   <body>
-	<#include "./iris_nested.ftl">
+	<@page_body/>
   <hr>
   </body>
 </html>
+
+</#macro>

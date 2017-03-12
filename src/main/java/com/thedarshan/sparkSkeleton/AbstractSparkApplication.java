@@ -17,7 +17,7 @@ public abstract class AbstractSparkApplication{
         return dataDirectory;
     }
     
-    abstract void init() throws Exception;
-    abstract void shutdown();    
+    public abstract void init() throws Exception;
+    public abstract void shutdown();    
     
 }
