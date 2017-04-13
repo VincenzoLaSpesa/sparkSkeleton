@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
-import com.j256.ormlite.table.TableUtils;
 import com.thedarshan.sparkSkeleton.AbstractSparkApplication;
 import com.thedarshan.sparkSkeleton.Helper;
 import com.thedarshan.sparkSkeleton.dbms.DatabaseHelper;
@@ -21,7 +20,6 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -78,12 +76,9 @@ public class DbmsApp extends AbstractSparkApplication {
             s.stream().forEach((t) -> {
                 System.out.println("->\t " + t);
             });
-            if (!s.contains("IRIS")) {
-                System.out.println("Creating table for " + Iris.class.getName());
-                int x = TableUtils.createTable(cs, Iris.class);
-                System.out.println("->\t " + x);
-            }
-            TableUtils.clearTable(cs, Iris.class);
+            
+            DatabaseHelper.prepareTable("iris", Iris.class, cs, s);
+            
             Dao<Iris, String> dao = DaoManager.createDao(cs, Iris.class);
             Iris[] data = loadData();
             int n = 0;

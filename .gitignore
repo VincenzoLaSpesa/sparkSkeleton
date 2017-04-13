@@ -1,2 +1,4 @@
 /target/
 /derby_database/
+/dataset/
+/src/main/java/com/thedarshan/sparkSkeleton/moto/

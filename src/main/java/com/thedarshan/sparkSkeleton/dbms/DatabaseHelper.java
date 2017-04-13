@@ -5,6 +5,8 @@
  */
 package com.thedarshan.sparkSkeleton.dbms;
 
+import com.j256.ormlite.support.ConnectionSource;
+import com.j256.ormlite.table.TableUtils;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -29,4 +31,13 @@ public abstract class DatabaseHelper {
         }
         return s;
     }
+    
+    public static void prepareTable(String tablename, Class dataClass , ConnectionSource cs, Set<String> tableSet) throws SQLException{
+            if (!tableSet.contains(tablename.toUpperCase())) {
+                System.out.println("Creating table for " + dataClass.getName());
+                int x = TableUtils.createTable(cs, dataClass);
+                System.out.println("->\t " + x);
+            }
+            TableUtils.clearTable(cs, dataClass);    
+    }    
 }

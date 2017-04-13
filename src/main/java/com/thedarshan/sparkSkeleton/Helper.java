@@ -1,15 +1,21 @@
 package com.thedarshan.sparkSkeleton;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import spark.Filter;
 import spark.Request;
 import spark.Spark;
 
@@ -18,7 +24,17 @@ import spark.Spark;
  * @author Darshan
  */
 public abstract class Helper {
-  
+
+    public static boolean serializeJsonToFile(Object obj, String pathname) {
+        try (Writer writer = new FileWriter(pathname)) {
+            Gson gson = new GsonBuilder().create();
+            gson.toJson(obj, writer);
+        } catch (IOException ex) {
+            return false;
+        }
+        return true;
+    }
+
     public static String readFile(String pathname) throws IOException {
 
         File file = new File(pathname);
@@ -51,6 +67,8 @@ public abstract class Helper {
         Spark.exception(Exception.class, (exception, request, response) -> {
             exception.printStackTrace();
         });
+
+        Spark.before((Filter) new MimeFilter());
     }
 
     public static void bindApplications(List<AbstractSparkApplication> apps) {
@@ -63,8 +81,6 @@ public abstract class Helper {
             }
         });
     }
-    
-    
 
     public static boolean shouldReturnHtml(Request request) {
         String accept = request.headers("Accept");
@@ -74,6 +90,22 @@ public abstract class Helper {
     static void easyBind(int port, String staticFilesLocation, List<AbstractSparkApplication> apps) {
         bindSpark(port, staticFilesLocation);
         bindApplications(apps);
+    }
+
+    static void changeLocale(String en, String en0) {
+        Locale l = Locale.getDefault();
+        System.out.println("Default Locale was " + l);
+        Locale.setDefault(new Locale("pt", "BR"));
+        l = Locale.getDefault();
+        System.out.println("Current Locale is " + l);
+    }
+
+    public static String getExtension(String path) {
+        int i = path.lastIndexOf('.');
+        if (i > 0) {
+            return path.substring(i + 1);
+        }
+        return "";
     }
 
 }
