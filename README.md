@@ -4,9 +4,7 @@ So it's an application server with skeleton dependencies.
 
 Using jetty and spark it's possible to build a complete web application with a footprint of 3.5MB only.
 
-**It's still WIP**
-
-As soon as I finish this application should show how to:
+The repository include a sample show how to:
 
 -	Setup a spark application with routes
 -	Obtain data from a custom folder
