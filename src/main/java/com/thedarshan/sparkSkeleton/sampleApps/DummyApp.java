@@ -26,6 +26,7 @@ public class DummyApp extends AbstractSparkApplication {
     String templateDir;
     Configuration conf;
     FreeMarkerEngine templateEngine;
+    Map data;
     
     public DummyApp(String mountPoint, String dataDir)  {
         super(mountPoint, dataDir);
@@ -44,13 +45,19 @@ public class DummyApp extends AbstractSparkApplication {
         conf.setDirectoryForTemplateLoading(new File(templateDir));
         templateEngine= new FreeMarkerEngine(conf);
 
-        Spark.get(mountPoint + "/hello", (req, res) -> hello());
-        Map map = new HashMap();
-        map.put("title", "Iris Dataset");
-        map.put("dataset", dataset);        
-        Spark.get(mountPoint +"/iris", (req, res) -> new ModelAndView(map, "iris.ftl"), templateEngine);               
+        
+        data = new HashMap();
+        data.put("title", "Iris Dataset");
+        data.put("dataset", dataset);        
     }
 
+    @Override
+    public void mount() {
+        Spark.get(mountPoint + "/hello", (req, res) -> hello());
+        Spark.get(mountPoint +"/iris", (req, res) -> new ModelAndView(data, "iris.ftl"), templateEngine);               
+    }
+
+    
     @Override
     public void shutdown() {
         System.out.println(String.format("Unmounting %s from %s", this.getClass().getName(), mountPoint));
@@ -77,4 +84,5 @@ public class DummyApp extends AbstractSparkApplication {
         Gson gson = new Gson();
         return gson.fromJson(buffer, obj.getClass());
     }
+
 }

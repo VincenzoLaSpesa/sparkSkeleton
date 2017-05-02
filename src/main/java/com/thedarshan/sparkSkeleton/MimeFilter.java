@@ -33,6 +33,7 @@ public class MimeFilter extends SparkFilter implements Filter
     
     public static String getMime(String requestPath){
         if(requestPath.length()<2) return "text/html";
+        System.out.printf("%s is %s \n" , requestPath, mimeMapping.getOrDefault(Helper.getExtension(requestPath), "text/html"));
         return mimeMapping.getOrDefault(Helper.getExtension(requestPath), "text/html");
     }
     
@@ -40,7 +41,6 @@ public class MimeFilter extends SparkFilter implements Filter
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException
     {
         String requestUrl = ((HttpServletRequest) request).getRequestURI();
-
         ((HttpServletResponse) response).setHeader("Content-Type",getMime(requestUrl));
         super.doFilter(request, response, chain);
     }

@@ -9,7 +9,6 @@ import java.io.Writer;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.sql.Connection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
@@ -69,6 +68,7 @@ public abstract class Helper {
         });
 
         Spark.before((Filter) new MimeFilter());
+        
     }
 
     public static void bindApplications(List<AbstractSparkApplication> apps) {
@@ -87,12 +87,12 @@ public abstract class Helper {
         return accept != null && accept.contains("text/html");
     }
 
-    static void easyBind(int port, String staticFilesLocation, List<AbstractSparkApplication> apps) {
+    public static void easyBind(int port, String staticFilesLocation, List<AbstractSparkApplication> apps) {
         bindSpark(port, staticFilesLocation);
         bindApplications(apps);
     }
 
-    static void changeLocale(String en, String en0) {
+    public static void changeLocale(String en, String en0) {
         Locale l = Locale.getDefault();
         System.out.println("Default Locale was " + l);
         Locale.setDefault(new Locale("pt", "BR"));

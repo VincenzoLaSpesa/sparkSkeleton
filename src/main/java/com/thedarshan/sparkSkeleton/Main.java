@@ -25,6 +25,6 @@ public class Main {
         apps.add(new DbmsApp("/dbms", System.getProperty("user.dir")));       
         Helper.easyBind(8080, staticDir, apps);
         Spark.get("/hello", (req, res) -> "Hello World");  
-        
+
     }    
 }

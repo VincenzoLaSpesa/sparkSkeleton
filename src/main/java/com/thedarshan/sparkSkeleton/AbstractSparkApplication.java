@@ -18,6 +18,7 @@ public abstract class AbstractSparkApplication{
     }
     
     public abstract void init() throws Exception;
+    public abstract void mount();
     public abstract void shutdown();
 
 

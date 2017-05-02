@@ -39,6 +39,7 @@ public class DbmsApp extends AbstractSparkApplication {
     String templateDir;
     Configuration conf;
     FreeMarkerEngine templateEngine;
+    Map data;
 
     public DbmsApp(String mountPoint, String dataDir) {
         super(mountPoint, dataDir);
@@ -57,15 +58,21 @@ public class DbmsApp extends AbstractSparkApplication {
         templateEngine = new FreeMarkerEngine(conf);
 
         initDatabase();
+        
+        data = new HashMap();
+        data.put("title", "Iris Dataset");
+        data.put("dataset", getData());         
 
-        Spark.get(mountPoint + "/hello", (req, res) -> hello());
-        Map map = new HashMap();
-        map.put("title", "Iris Dataset");
-        map.put("dataset", getData());        
-
-        Spark.get(mountPoint + "/iris", (req, res) -> new ModelAndView(map, "iris_nested.ftl"), templateEngine);
+        mount();
 
     }
+    
+    @Override
+    public void mount() {
+       
+        Spark.get(mountPoint + "/iris", (req, res) -> new ModelAndView(data, "iris_nested.ftl"), templateEngine);
+        Spark.get(mountPoint + "/hello", (req, res) -> hello());
+    }    
 
     private boolean initDatabase() {
         DatabaseInterface dbi = DatabaseInterface.getSingleton();
@@ -80,9 +87,9 @@ public class DbmsApp extends AbstractSparkApplication {
             DatabaseHelper.prepareTable("iris", Iris.class, cs, s);
             
             Dao<Iris, String> dao = DaoManager.createDao(cs, Iris.class);
-            Iris[] data = loadData();
+            Iris[] irisData = loadData();
             int n = 0;
-            for (Iris obj : data) {
+            for (Iris obj : irisData) {
                 obj.id = n++;
                 dao.createOrUpdate(obj);
             }
@@ -133,4 +140,6 @@ public class DbmsApp extends AbstractSparkApplication {
         Dao<Iris, String> dao = DaoManager.createDao(cs, Iris.class);
         return dao.queryForAll();        
     }
+
+
 }
