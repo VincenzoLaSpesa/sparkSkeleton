@@ -1,6 +1,9 @@
+/*
+ * Copyright (c) 2017 Vincenzo La Spesa, This software is released under the MIT License
+ */
+
 package com.thedarshan.sparkSkeleton.sampleApps;
 
-import com.thedarshan.sparkSkeleton.dbms.DatabaseInterface;
 import com.google.gson.Gson;
 import com.thedarshan.sparkSkeleton.AbstractSparkApplication;
 import com.thedarshan.sparkSkeleton.Helper;
@@ -17,7 +20,6 @@ import spark.Spark;
 import spark.template.freemarker.FreeMarkerEngine;
 
 /**
- *
  * @author Darshan
  */
 public class DummyApp extends AbstractSparkApplication {

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2017 Vincenzo La Spesa, This software is released under the MIT License
+ */
+
 package com.thedarshan.sparkSkeleton;
 
 public abstract class AbstractSparkApplication{
@@ -20,8 +24,4 @@ public abstract class AbstractSparkApplication{
     public abstract void init() throws Exception;
     public abstract void mount();
     public abstract void shutdown();
-
-
-    
-    
 }

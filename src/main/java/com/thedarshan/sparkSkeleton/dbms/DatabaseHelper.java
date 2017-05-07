@@ -1,8 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (c) 2017 Vincenzo La Spesa, This software is released under the MIT License
  */
+
 package com.thedarshan.sparkSkeleton.dbms;
 
 import com.j256.ormlite.support.ConnectionSource;
@@ -15,7 +14,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- *
  * @author Darshan
  */
 public abstract class DatabaseHelper {

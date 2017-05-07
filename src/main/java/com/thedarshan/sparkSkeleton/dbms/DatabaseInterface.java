@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2017 Vincenzo La Spesa, This software is released under the MIT License
+ */
+
 package com.thedarshan.sparkSkeleton.dbms;
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
@@ -9,7 +13,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 /**
- *
  * @author DEVVIK
  */
 public class DatabaseInterface {

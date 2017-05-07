@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2017 Vincenzo La Spesa, This software is released under the MIT License
+ */
+
 package com.thedarshan.sparkSkeleton;
 
 import java.io.IOException;
@@ -19,6 +23,7 @@ import spark.servlet.SparkFilter;
  * @author Darshan
  * 08/04/2017
  * Based on https://github.com/perwendel/spark/issues/373
+ * Copyright (c) 2017 Vincenzo La Spesa, This software is released under the MIT License
  */
 public class MimeFilter extends SparkFilter implements Filter
 {

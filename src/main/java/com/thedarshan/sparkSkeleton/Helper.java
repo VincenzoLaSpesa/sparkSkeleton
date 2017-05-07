@@ -19,7 +19,7 @@ import spark.Request;
 import spark.Spark;
 
 /**
- *
+ * Copyright (c) 2017 Vincenzo La Spesa, This software is released under the MIT License
  * @author Darshan
  */
 public abstract class Helper {
