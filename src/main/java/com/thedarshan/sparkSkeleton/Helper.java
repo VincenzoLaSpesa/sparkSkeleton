@@ -7,11 +7,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.FileSystems;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.PathMatcher;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import spark.Filter;
@@ -24,6 +32,62 @@ import spark.Spark;
  */
 public abstract class Helper {
 
+
+   /**
+     * Implementa un Glob. Questo Inferno é l'approccio suggerito
+     * @param basePath
+     * @param glob
+     * @return
+     * @throws IOException 
+     */
+    public static List<Path> DirGlob(Path basePath, String glob) throws IOException{
+        ArrayList<Path> files=new ArrayList<>();
+        final PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:"+glob);
+        Files.walkFileTree(basePath, new SimpleFileVisitor<Path>() {
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                if (matcher.matches(file)) {
+                    files.add(file);
+                }
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+                return FileVisitResult.CONTINUE;
+            }
+        });
+        
+        return files;
+    }
+    
+    @Deprecated
+    public static Collection<File> listFileTree(File dir) {
+        Set<File> fileTree = new HashSet<>();
+        if (dir == null || dir.listFiles() == null) {
+            return fileTree;
+        }
+        for (File entry : dir.listFiles()) {
+            if (entry.isFile()) {
+                fileTree.add(entry);
+            } else {
+                fileTree.addAll(listFileTree(entry));
+            }
+        }
+        return fileTree;
+    }
+    
+    
+    
+    public static String flattern(String[] v,int from, int to){
+        if(to<0)to=v.length-1;
+        StringBuilder sb= new StringBuilder();
+        for(int a=from;a<=to;a++){
+            sb.append(v[a]).append(" ");
+        }
+        return sb.toString().trim();
+    }    
+    
     public static boolean serializeJsonToFile(Object obj, String pathname) {
         try (Writer writer = new FileWriter(pathname)) {
             Gson gson = new GsonBuilder().create();
@@ -33,7 +97,7 @@ public abstract class Helper {
         }
         return true;
     }
-    
+
     public static String readFile(String pathname) throws IOException {
 
         File file = new File(pathname);
